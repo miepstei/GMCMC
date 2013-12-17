@@ -1,0 +1,71 @@
+# Common settings for all Makefiles
+
+# Compiler
+
+# GCC
+# CC = gcc
+# CFLAGS = -std=c99 -pedantic -Wall -Wextra -O0 -ggdb -pipe
+
+# ICC
+CC = icc
+CFLAGS = -std=c99 -Wall -Wextra -O2 -openmp -pthread
+
+
+# BLAS/CBLAS/LAPACK
+# Reference
+LAPACK_CPPFLAGS = -I${HOME}/include
+LAPACK_LDFLAGS = -L${HOME}/lib64
+LAPACK_LDLIBS = -Wl,-rpath=${HOME}/lib64 -lblas -lcblas -llapack -llapacke -lm
+
+# MKL
+# MKLROOT = /apps/intel/2013/mkl
+# LAPACK_CPPFLAGS = -DMKL -I$(MKLROOT)/include
+# LAPACK_LDFLAGS = -L$(MKLROOT)/lib/intel64
+# LAPACK_LDLIBS = -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -openmp -lpthread -lm
+
+
+# MPI
+# OpenMPI
+# MPI_CPPFLAGS = -I/apps/openmpi/1.6.0/include/
+# MPI_LDFLAGS = -L/apps/openmpi/1.6.0/lib
+# MPI_LDLIBS = -lmpi -lpthread
+
+# Intel
+MPI_CPPFLAGS = -I/apps/intel/ict/mpi/3.1.038/include/
+MPI_LDFLAGS = -L/apps/intel/ict/mpi/3.1.038/lib
+MPI_LDLIBS = -lmpi -lmpigf -lmpigi -lrt -lpthread -ldl
+
+# OPENMP
+# GNU
+# OMP_CPPFLAGS =
+# OMP_LDFLAGS =
+# OMP_LDLIBS = -lgomp -lpthread
+
+# Intel
+OMP_CPPFLAGS =
+OMP_LDFLAGS = -L/apps/intel/2013/composer_xe_2013/lib/intel64/
+OMP_LDLIBS = -liomp5
+
+
+# SUNDIALS
+SUNDIALS_CPPFLAGS = -I$(HOME)/include
+SUNDIALS_LDFLAGS = -L$(HOME)/lib64
+SUNDIALS_LDLIBS = -Wl,-rpath=$(HOME)/lib64 -lsundials_cvodes -lsundials_nvecserial
+
+
+# MATLAB
+# MATLAB_ROOT = /opt/MATLAB/R2013a
+# MATLAB_CPPFLAGS = -I$(MATLAB_ROOT)/extern/include
+# MATLAB_LDFLAGS = -L$(MATLAB_ROOT)/bin/glnxa64 -Wl,-rpath-link,$(MATLAB_ROOT)/bin/glnxa64 -Wl,-rpath,$(MATLAB_ROOT)/sys/os/glnxa64
+# MATLAB_LDLIBS = -lmx -lmex -lmat -lm -lstdc++
+
+# HDF5
+HDF5_CPPFLAGS = -I/apps/hdf5/1.8.5/include $(MPI_CPPFLAGS)
+HDF5_LDFLAGS = -L/apps/hdf5/1.8.5/lib $(MPI_LDFLAGS)
+HDF5_LDLIBS = -lhdf5_hl -lhdf5 -lz -lm -Wl,-rpath -Wl,/apps/hdf5/1.8.5/lib $(MPI_LDLIBS)
+
+# CUNIT
+# CUNIT_CPPFLAGS = -I/usr/include
+# CUNIT_LDFLAGS = -L/usr/lib64
+# CUNIT_LDLIBS = -lcunit
+
