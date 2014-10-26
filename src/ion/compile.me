@@ -1,0 +1,2 @@
+g++ -shared -Wall -fPIC -std=c++11 dcprogs_wrapper.cpp -I/usr/local/dcprogs/include/dcprogs/likelihood -I/usr/local/dcprogs/include/dcprogs/ -I/usr/local/Eigen -I../.. -L/usr/local/dcprogs/lib/ -llikelihood -o dcprogs_wrapper.so
+sudo cp dcprogs_wrapper.so /usr/local/lib/libdcprogs_wrapper.so

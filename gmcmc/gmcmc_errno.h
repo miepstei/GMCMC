@@ -26,6 +26,9 @@
 #define GMCMC_EIPC 4
 /** BLAS/LAPACK error (non positive-definite matrix, singular matrix, etc.) */
 #define GMCMC_ELINAL 5
+/** DCPROGS SPECIFIC ERROR */
+#define GMCMC_DCPROGS 6
+
 
 /**
  * Maps Geometric MCMC error codes to textual descriptions.

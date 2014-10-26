@@ -48,7 +48,20 @@ typedef struct {
  * @param [out] Q       Q matrix to populate
  * @param [in]  ldq     leading dimension of the Q matrix
  */
-typedef void (*gmcmc_ion_calculate_Q_matrix)(const double *, double *, size_t);
+typedef void (*gmcmc_ion_calculate_Q_matrix)(const double *, double *, size_t, double);
+
+/**
+* Function type that allows a preconditioned matrix to be supplied to the proposal
+* function. If the condition flag is set on the commang line then the function returns
+* a preconditioned matrix; else it returns the identity matrix. It has the same dimensions
+* as nparams*nparams
+*
+* @param [out] M    preconditioned Matrix
+* @param [in]  ldm  leading dimension of the M matrix
+*/
+
+
+typedef void (*gmcmc_ion_precondition_covariance)(double *, size_t);
 
 /**
  * Creates an ion channel model-specific data object.
@@ -64,7 +77,7 @@ typedef void (*gmcmc_ion_calculate_Q_matrix)(const double *, double *, size_t);
  *         GMCMC_ENOMEM if there is not enough memory to create the data object.
  */
 int gmcmc_ion_model_create(gmcmc_ion_model **, unsigned int, unsigned int,
-                           gmcmc_ion_calculate_Q_matrix);
+                           gmcmc_ion_calculate_Q_matrix, gmcmc_ion_precondition_covariance);
 
 /**
  * Destroys the ion channel model-specific data.
@@ -100,7 +113,7 @@ unsigned int gmcmc_ion_model_get_num_open_states(const gmcmc_ion_model *);
  * @param [in]  ldq        leading dimension of the Q matrix
  */
 void gmcmc_ion_model_calculate_Q_matrix(const gmcmc_ion_model *, const double *,
-                                        double *, size_t);
+                                        double *, size_t, double);
 
 /**
  * Destroys an ion channel dataset.

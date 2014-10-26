@@ -77,7 +77,7 @@ static int ion_likelihood_mh(const void * dataset, const gmcmc_model * model,
     GMCMC_ERROR("Unable to allocate Q matrix", GMCMC_ENOMEM);
 
   // Calculate the Q matrix
-  gmcmc_ion_model_calculate_Q_matrix(ion_model, params, Q, ldq);
+  gmcmc_ion_model_calculate_Q_matrix(ion_model, params, Q, ldq , 1);
 
 
   /*

@@ -18,6 +18,8 @@ struct gmcmc_ion_model {
    * Function to update the Q matrix based on the current parameter values.
    */
   gmcmc_ion_calculate_Q_matrix calculate_Q_matrix;
+  gmcmc_ion_precondition_covariance precondition_covariance;
+
 };
 
 /**
@@ -31,6 +33,7 @@ struct gmcmc_ion_model {
  *                                    closed states are presumed to be stored in
  *                                    the top-left of the matrix and the open
  *                                    states in the bottom-right
+ * @param [in] precondition_matrix  a function to return a pre-specified condition matrix
  *
  * @return 0 on success,
  *         GMCMC_EINVAL if calculate_Q_matrix is NULL, or
@@ -38,9 +41,13 @@ struct gmcmc_ion_model {
  */
 int gmcmc_ion_model_create(gmcmc_ion_model ** ion_model,
                            unsigned int closed, unsigned int open,
-                           gmcmc_ion_calculate_Q_matrix calculate_Q_matrix) {
+                           gmcmc_ion_calculate_Q_matrix calculate_Q_matrix,
+                           gmcmc_ion_precondition_covariance precondition_covariance) {
   if (calculate_Q_matrix == NULL)
     GMCMC_ERROR("calculate_Q_matrix is NULL", GMCMC_EINVAL);
+
+  if (precondition_covariance == NULL)
+    GMCMC_ERROR("precondition_covariance is NULL", GMCMC_EINVAL);
 
   if ((*ion_model = malloc(sizeof(gmcmc_ion_model))) == NULL)
     GMCMC_ERROR("Unable to allocate Ion Channel model", GMCMC_ENOMEM);
@@ -48,6 +55,7 @@ int gmcmc_ion_model_create(gmcmc_ion_model ** ion_model,
   (*ion_model)->closed = closed;
   (*ion_model)->open = open;
   (*ion_model)->calculate_Q_matrix = calculate_Q_matrix;
+  (*ion_model)->precondition_covariance = precondition_covariance;
 
   return 0;
 }
@@ -93,6 +101,12 @@ unsigned int gmcmc_ion_model_get_num_open_states(const gmcmc_ion_model * ion_mod
  */
 void gmcmc_ion_model_calculate_Q_matrix(const gmcmc_ion_model * ion_model,
                                         const double * params, double * Q,
-                                        size_t ldq) {
-  ion_model->calculate_Q_matrix(params, Q, ldq);
+                                        size_t ldq, double conc) {
+  ion_model->calculate_Q_matrix(params, Q, ldq, conc);
+}
+
+void gmcmc_ion_model_precondition_covariance(const gmcmc_ion_model * ion_model,
+                                        double * M,
+                                        size_t ldm) {
+  ion_model->precondition_covariance(M,ldm);
 }
