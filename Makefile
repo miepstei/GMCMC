@@ -9,7 +9,7 @@ VPATH = . examples gmcmc
 
 .PHONY: all examples test clean install
 
-ION_examples = ION_TwoState_PopMCMC_MH ION_ThreeState_Precond_MH ION_ThreeState_MH ION_SevenState_10Param_PopMCMC_MH ION_SevenState_10Param_PopMCMC_Precond ION_SevenState_10Param_Precond_Synthetic_MH ION_ThreeState_Precond_Synthetic_MH
+ION_examples = ION_TwoState_PopMCMC_MH ION_ThreeState_Precond_MH ION_ThreeState_MH ION_SevenState_10Param_PopMCMC_MH ION_SevenState_10Param_PopMCMC_Precond ION_SevenState_10Param_Precond_Synthetic_MH ION_ThreeState_Precond_Synthetic_MH ION_FiveState_8Param_Precond_Synthetic_MH ION_FiveState_8Param_Precond_MH
 
 ODE_examples = FitzHugh_Benchmark_MH FitzHugh_Benchmark_Simp_mMALA \
                Locke_Benchmark_MH Locke_Benchmark_Simp_mMALA \
