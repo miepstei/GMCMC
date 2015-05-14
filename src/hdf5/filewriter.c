@@ -156,8 +156,8 @@ static int write(void * state, size_t iteration, size_t temperature,
   if (fw->closed)
     GMCMC_ERROR("Filewriter is closed", GMCMC_EIO);
 
-  char name[13 + temperature / 10];
-  snprintf(name, 13 + temperature / 10, "Temperature%zu", temperature + 1);
+  char name[13 + (temperature + 1) / 10]; //in base 0 the 9th temperature is actually the 10th so requires size 14 name array
+  snprintf(name, 13 + (temperature + 1) / 10, "Temperature%zu", temperature + 1);
 
   // Open the group corresponding to the current temperature
   hid_t group;
